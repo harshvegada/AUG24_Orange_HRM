@@ -1,10 +1,11 @@
 package services;
 
+import base.BaseServices_Modular;
 import base.CommonServices;
 import constants.SkillAPIEndPoint;
 import io.restassured.response.Response;
 
-public class SkillServices extends CommonServices {
+public class SkillServices extends BaseServices_Modular {
 
     public Response createSkill(Object payload){
         setBody(payload);

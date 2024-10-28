@@ -2,7 +2,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="All Test Suite">
     <test verbose="2" preserve-order="true"
-          name="Dashboard Test">
+          name="Dashboard Test Script">
         <classes>
             <class name="testScripts.DashboardTestScripts">
                 <methods>
@@ -13,7 +13,7 @@
         </classes>
     </test>
     <test verbose="2" preserve-order="true"
-          name="Employee Create,Update, Delete">
+          name="Employee CURD Test">
         <classes>
             <class name="testScripts.EmployeeCURDTest">
                 <methods>
@@ -23,7 +23,7 @@
         </classes>
     </test>
     <test verbose="2" preserve-order="true"
-          name="SkillTest Create, Update, Read and Delete">
+          name="Skill Test Scripts">
         <classes>
             <class name="testScripts.SkillTestScripts">
                 <methods>

@@ -52,7 +52,7 @@ public abstract class BaseServices_Modular {
         setToken();
         setCookies();
         Response response = RestAssured.
-                given().log().all()
+                given().log().all().filter(new AllureRestAssured())
                 .spec(requestSpecBuilder.build())
                 .when()
                 .get(endPoint)
@@ -64,7 +64,7 @@ public abstract class BaseServices_Modular {
     public Response executePostAPI(String endPoint) {
         setToken();
         setCookies();
-        Response response = RestAssured.given()
+        Response response = RestAssured.given().filter(new AllureRestAssured())
                 .log().all()
                 .spec(requestSpecBuilder.build())
                 .when()
@@ -79,7 +79,6 @@ public abstract class BaseServices_Modular {
             requestSpecBuilder = new RequestSpecBuilder();
         }
         requestSpecBuilder.setBaseUri(CommonAPI.BASE_URI);
-        requestSpecBuilder.addFilter(new AllureRestAssured());
     }
 
     private void tearDown() {
@@ -89,7 +88,7 @@ public abstract class BaseServices_Modular {
     public Response executePutAPI(String endPoint) {
         setToken();
         setCookies();
-        Response response = RestAssured.given()
+        Response response = RestAssured.given().filter(new AllureRestAssured())
                 .spec(requestSpecBuilder.build())
                 .when()
                 .put(endPoint)
@@ -102,7 +101,7 @@ public abstract class BaseServices_Modular {
         setToken();
         setCookies();
 
-        Response response = RestAssured.given()
+        Response response = RestAssured.given().filter(new AllureRestAssured())
                 .spec(requestSpecBuilder.build())
                 .when()
                 .patch(endPoint)
@@ -115,7 +114,7 @@ public abstract class BaseServices_Modular {
         setToken();
         setCookies();
 
-        Response response = RestAssured.given()
+        Response response = RestAssured.given().filter(new AllureRestAssured())
                 .spec(requestSpecBuilder.build())
                 .when()
                 .delete(endPoint)

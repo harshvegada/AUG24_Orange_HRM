@@ -1,13 +1,13 @@
 package testScripts;
 
 import base.CommonServices;
-import constants.FilePaths;
+import constants.HttpStatusCode;
+import constants.StatusCode;
 import entity.request.employeePayloads.Data;
 import entity.request.employeePayloads.EmployeDeletePayload;
 import entity.request.employeePayloads.EmployeeCreatePayload;
 import entity.request.employeePayloads.Params;
 import io.qameta.allure.Allure;
-import io.restassured.module.jsv.JsonSchemaValidator;
 import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
@@ -15,9 +15,7 @@ import org.testng.annotations.Test;
 import services.EmployeeListServices;
 import utility.TestData;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class EmployeeCURDTest {
@@ -62,7 +60,7 @@ public class EmployeeCURDTest {
         //Create Employee
         Response response = employeeListServices.createEmployee(payload);
         System.out.println(response.asPrettyString());
-        Assert.assertEquals(response.statusCode(), 200);
+        Assert.assertEquals(response.statusCode(), HttpStatusCode.OK.getStatusCode());
 
         String empNumber = response.jsonPath().getString("data.empNumber");
         String employeeId = response.jsonPath().getString("data.employeeId");
@@ -70,14 +68,16 @@ public class EmployeeCURDTest {
 //        response.then().body(JsonSchemaValidator.matchesJsonSchema(new File(FilePaths.CREATE_EMP_SCHEMA)));
 
         //Update Employee Details
+        Allure.step("Updating Employee " + empNumber);
         Data updateEmployeeDataPayload = Data.builder().firstName(firstName).middleName(middleName).lastName(lastName).otherId("").emp_gender("1").emp_marital_status("Married").nation_code("82").licenseNo(licenceNumber).employeeId(employeeId).ssn(ssn).emp_birthday(empBirthDay).emp_dri_lice_exp_date(futureDate).build();
 
         Response updateEmpResponse = employeeListServices.updateDetailsEmployee(updateEmployeeDataPayload, empNumber);
-        Assert.assertEquals(updateEmpResponse.statusCode(), 200);
+        Assert.assertEquals(updateEmpResponse.statusCode(), HttpStatusCode.OK.getStatusCode());
         Assert.assertEquals(updateEmpResponse.jsonPath().getString("messages"), "Successfully Saved");
 
 //        updateEmpResponse.then().body(JsonSchemaValidator.matchesJsonSchema(new File(FilePaths.CREATE_EMP_SCHEMA)));
 
+        Allure.step("Deleting Employee " + empNumber);
         EmployeDeletePayload deleteEmpPayload = EmployeDeletePayload.builder()
                 .reason("11")
                 .date(joinDate)
@@ -89,8 +89,7 @@ public class EmployeeCURDTest {
 
 
         Response deletePayload = employeeListServices.deleteEmpDetails(deleteEmpPayload, empNumber);
-        Assert.assertEquals(deletePayload.statusCode(), 201);
+        Assert.assertEquals(deletePayload.statusCode(), HttpStatusCode.CREATED.getStatusCode());
         Assert.assertEquals(deletePayload.jsonPath().getString("messages.success"), "Successfully Saved");
     }
-
 }

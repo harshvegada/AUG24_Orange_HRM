@@ -1,5 +1,6 @@
 package services;
 
+import base.BaseServices_Modular;
 import base.CommonServices;
 import constants.EmployeeAPIEndPoint;
 import io.restassured.response.Response;
@@ -7,7 +8,7 @@ import io.restassured.response.Response;
 import java.util.HashMap;
 import java.util.Map;
 
-public class EmployeeListServices extends CommonServices {
+public class EmployeeListServices extends BaseServices_Modular {
 
 
     public Response getListOfEmployee() {
@@ -26,12 +27,25 @@ public class EmployeeListServices extends CommonServices {
         return executePostAPI(EmployeeAPIEndPoint.CREATE_EMPLOYEE);
     }
 
+    public Response createEmployee() {
+        String payload = "";
+        setBody(payload);
+        setContentTypeAsApplicationJSON();
+        return executePostAPI(EmployeeAPIEndPoint.CREATE_EMPLOYEE);
+    }
+
     public Response updateDetailsEmployee(Object payload, String employeeNumber) {
         setBody(payload);
         setContentTypeAsApplicationJSON();
         return executePatchAPI(String.format(EmployeeAPIEndPoint.UPDATE_EMPLOYEE, employeeNumber));
     }
 
+    public Response updateDetailsEmployee(String employeeNumber) {
+        String payload = "";
+        setBody(payload);
+        setContentTypeAsApplicationJSON();
+        return executePatchAPI(String.format(EmployeeAPIEndPoint.UPDATE_EMPLOYEE, employeeNumber));
+    }
 
     public Response deleteEmpDetails(Object payload, String employeeNumber) {
         setBody(payload);
